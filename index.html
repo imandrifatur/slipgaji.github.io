@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Salary Slip</title>
+</head>
+<body>
+  <h1>Salary Slip</h1>
+  <div id="salary-details"></div>
+
+  <script>
+    // Function to get query parameter by name
+    function getQueryParam(param) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(param);
+    }
+
+    // Display salary details
+    const salaryDetails = `
+      <p>ID Karyawan: ${getQueryParam('id')}</p>
+      <p>Nama: ${getQueryParam('name')}</p>
+      <p>Departemen: ${getQueryParam('department')}</p>
+      <p>Jabatan: ${getQueryParam('position')}</p>
+      <p>Gaji Pokok: Rp${getQueryParam('salary')}</p>
+      <p>Lembur: Rp${getQueryParam('overtime')}</p>
+      <p>Tunjangan: Rp${getQueryParam('allowance')}</p>
+      <p>BPJS TK: Rp${getQueryParam('bpjsTk')}</p>
+      <p>BPJS Kesehatan: Rp${getQueryParam('bpjsKes')}</p>
+      <p>PPH 10%: Rp${getQueryParam('pph')}</p>
+      <p>Total Gaji Bersih: Rp${getQueryParam('netSalary')}</p>
+    `;
+
+    document.getElementById('salary-details').innerHTML = salaryDetails;
+  </script>
+</body>
+</html>
