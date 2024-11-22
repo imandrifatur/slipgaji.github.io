@@ -16,27 +16,29 @@
       return urlParams.get(param);
     }
 
-    // Display salary details
-    const employeeId = new URLSearchParams(window.location.search).get('id');
-const employee = JSON.parse(localStorage.getItem('employees')).find(emp => emp.id == employeeId);
+    // Display salary details using data from localStorage
+    const employeeId = getQueryParam('id');  // Get employee ID from the URL parameters
+    const employee = JSON.parse(localStorage.getItem('employees')).find(emp => emp.id == employeeId);
 
-// Now use the `employee` data to display the salary slip.
+    if (employee) {
+      const salaryDetails = `
+        <p>ID Karyawan: ${employee.id}</p>
+        <p>Nama: ${employee.name}</p>
+        <p>Departemen: ${employee.department}</p>
+        <p>Jabatan: ${employee.position}</p>
+        <p>Gaji Pokok: Rp${employee.salary}</p>
+        <p>Lembur: Rp${employee.overtime}</p>
+        <p>Tunjangan: Rp${employee.allowance}</p>
+        <p>BPJS TK: Rp${employee.bpjsTk}</p>
+        <p>BPJS Kesehatan: Rp${employee.bpjsKes}</p>
+        <p>PPH 10%: Rp${employee.salary * 0.1}</p>
+        <p>Total Gaji Bersih: Rp${employee.salary + employee.overtime + employee.allowance - (employee.bpjsTk + employee.bpjsKes + employee.salary * 0.1)}</p>
+      `;
 
-    const salaryDetails = `
-      <p>ID Karyawan: ${getQueryParam('id')}</p>
-      <p>Nama: ${getQueryParam('name')}</p>
-      <p>Departemen: ${getQueryParam('department')}</p>
-      <p>Jabatan: ${getQueryParam('position')}</p>
-      <p>Gaji Pokok: Rp${getQueryParam('salary')}</p>
-      <p>Lembur: Rp${getQueryParam('overtime')}</p>
-      <p>Tunjangan: Rp${getQueryParam('allowance')}</p>
-      <p>BPJS TK: Rp${getQueryParam('bpjsTk')}</p>
-      <p>BPJS Kesehatan: Rp${getQueryParam('bpjsKes')}</p>
-      <p>PPH 10%: Rp${getQueryParam('pph')}</p>
-      <p>Total Gaji Bersih: Rp${getQueryParam('netSalary')}</p>
-    `;
-
-    document.getElementById('salary-details').innerHTML = salaryDetails;
+      document.getElementById('salary-details').innerHTML = salaryDetails;
+    } else {
+      document.getElementById('salary-details').innerHTML = '<p>Employee not found.</p>';
+    }
   </script>
 </body>
 </html>
