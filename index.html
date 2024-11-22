@@ -17,6 +17,11 @@
     }
 
     // Display salary details
+    const employeeId = new URLSearchParams(window.location.search).get('id');
+const employee = JSON.parse(localStorage.getItem('employees')).find(emp => emp.id == employeeId);
+
+// Now use the `employee` data to display the salary slip.
+
     const salaryDetails = `
       <p>ID Karyawan: ${getQueryParam('id')}</p>
       <p>Nama: ${getQueryParam('name')}</p>
